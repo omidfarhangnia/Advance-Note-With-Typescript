@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { note } from "./projectTypes";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
 type newProps = {
   notes: note[];
@@ -36,6 +37,7 @@ export default function New({ notes, setNotes, setTags, tags }: newProps) {
         title: titleRef.current?.value,
         tags: ["helloo"],
         body: bodyRef.current?.value,
+        id: uuidv4()
       },
     ]);
 

@@ -20,9 +20,7 @@ export default function Home({ notes, tags }: homeProps) {
                 create
               </button>
             </Link>
-            <button
-              className="font-belanosima font-light capitalize rounded-lg bg-white text-blue-600 px-4 py-2"
-            >
+            <button className="font-belanosima font-light capitalize rounded-lg bg-white text-blue-600 px-4 py-2">
               edit tags
             </button>
           </div>
@@ -63,10 +61,23 @@ export default function Home({ notes, tags }: homeProps) {
             </div>
           </form>
         </div>
-        <div className="border-2 flex flex-col items-center justify-around border-solid border-blue-600 rounded-xl min-h-[40vh]">
+        <div className="border-2 flex flex-wrap overflow-y-scroll items-center justify-around border-solid border-blue-600 rounded-xl min-h-[40vh] gap-5 p-5">
           {notes.length > 0 ? (
             notes.map((note, index) => (
-              <div key={index}>this is note number {index}</div>
+              <Link
+                to={`/${note.id}`}
+                key={index}
+                className="w-[30%] flex flex-col gap-2 py-3 rounded-2xl items-center border-2 border-solid border-blue-400"
+              >
+                <div className="font-bold">{note.title}</div>
+                <div>
+                  {note.tags.map((tag) => (
+                    <span className="bg-blue-400 py-1 px-2 text-[13px] font-bold text-white rounded-full">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </Link>
             ))
           ) : (
             <div className="flex flex-col justify-center items-center gap-3">
