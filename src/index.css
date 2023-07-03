@@ -1,3 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .animatedGhost {
+        animation: GhostAnimation 4s infinite alternate-reverse ease-in-out;
+    }
+
+    @keyframes GhostAnimation {
+        0% {
+            transform: translate(0, 0);
+        }
+        100% {
+            transform: translate(0, -20px);
+        }
+    }
+}
