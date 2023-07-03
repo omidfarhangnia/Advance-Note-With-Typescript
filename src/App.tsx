@@ -14,7 +14,7 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<Home notes={notes} tags={tags} />} />
-        <Route path='/new' element={<New />} />
+        <Route path='/new' element={<New notes={notes} setNotes={setNotes} setTags={setTags} tags={tags} />} />
         <Route path='/:id'>
             <Route index element={< Show/>} />
             <Route path='edit' element={<Edit />} />
