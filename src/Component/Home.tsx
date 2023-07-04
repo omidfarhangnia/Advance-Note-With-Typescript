@@ -6,11 +6,16 @@ import { ButtonHTMLAttributes, useRef, useState } from "react";
 type homeProps = {
   notes: note[];
   tags: string[];
+  setSelectedNoteId: (arg: string) => void;
 };
 
-export default function Home({ notes, tags }: homeProps) {
+export default function Home({ notes, tags, setSelectedNoteId }: homeProps) {
   const [chosenTitle, setChosenTitle] = useState<string>("");
-  
+
+  function handleClick(id: string) {
+    setSelectedNoteId(id);
+  }
+
   return (
     <>
       <div className="w-full h-screen bg-gray-400/30 flex gap-[7vh] flex-col px-[10vw] py-[5vh]">
@@ -69,11 +74,19 @@ export default function Home({ notes, tags }: homeProps) {
         <div className="border-2 flex flex-wrap overflow-y-scroll items-center justify-around border-solid border-blue-600 rounded-xl min-h-[40vh] gap-5 p-5">
           {notes.length > 0 ? (
             chosenTitle.length === 0 ? (
-              notes.map((note, index) => <NoteCards note={note} key={index} />)
+              notes.map((note, index) => (
+                <NoteCards handleClick={handleClick} note={note} key={index} />
+              ))
             ) : (
               notes
                 .filter((note) => note.title.startsWith(chosenTitle))
-                .map((note, index) => <NoteCards note={note} key={index} />)
+                .map((note, index) => (
+                  <NoteCards
+                    handleClick={handleClick}
+                    note={note}
+                    key={index}
+                  />
+                ))
             )
           ) : (
             <EmptyNoteList />
@@ -86,11 +99,13 @@ export default function Home({ notes, tags }: homeProps) {
 
 type NoteCardsProps = {
   note: note;
+  handleClick: (arg: string) => void;
 };
 
-function NoteCards({ note }: NoteCardsProps) {
+function NoteCards({ note, handleClick }: NoteCardsProps) {
   return (
     <Link
+      onClick={() => handleClick(note.id)}
       to={`/${note.id}`}
       className="w-[30%] flex flex-col gap-2 py-3 rounded-2xl items-center border-2 border-solid border-blue-400"
     >

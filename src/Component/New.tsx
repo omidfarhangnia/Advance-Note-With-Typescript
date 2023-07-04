@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 type newProps = {
   notes: note[];
   setNotes: (arg: note[]) => void;
-  setTags: (arg: string) => void;
+  setTags: (arg: string[]) => void;
   tags: string[];
 };
 
