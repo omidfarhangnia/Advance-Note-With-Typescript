@@ -1,6 +1,24 @@
-export type note = {
+export type Note = {
+    id: string;
+} & NoteData;
+
+export type RawNote = {
+    id: string,
+} & RawNoteData
+
+export type RawNoteData = {
     title: string,
-    tags: string[],
+    tagsId: string[],
     body: string,
-    id: string
+}
+
+export type NoteData = {
+    title: string,
+    tags: Tag[],
+    body: string,
+}
+
+export type Tag = {
+    id: string;
+    label: string;
 }

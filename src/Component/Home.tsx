@@ -1,11 +1,12 @@
 import { PiGhostFill } from "react-icons/pi";
-import { note } from "./projectTypes";
+import { RawNote, Tag } from "./projectTypes";
 import { Link } from "react-router-dom";
-import { ButtonHTMLAttributes, useRef, useState } from "react";
+import { useState } from "react";
+import CreatableSelect from "react-select/creatable";
 
 type homeProps = {
-  notes: note[];
-  tags: string[];
+  notes: RawNote[];
+  tags: Tag[];
   setSelectedNoteId: (arg: string) => void;
 };
 
@@ -58,16 +59,10 @@ export default function Home({ notes, tags, setSelectedNoteId }: homeProps) {
               >
                 tags
               </label>
-              <select
-                id="searchTagsInput"
-                className="p-3 text-[20px] bg-transparent outline-none border-2 border-solid border-blue-400 rounded-lg"
-              >
-                {tags.map((tag, index) => (
-                  <option key={index} value={tag}>
-                    {tag}
-                  </option>
-                ))}
-              </select>
+              <CreatableSelect
+                isMulti
+                className="[&>div]:bg-transparent border-2 border-solid border-blue-400 rounded-lg min-h-[60px] flex justify-center items-center [&>div]:w-full [&>div]:border-none [&>div>div>div[class*='multiValue']]:bg-white [&>div>div>div[class*='multiValue']]:text-[18px]"
+              />
             </div>
           </form>
         </div>
@@ -98,7 +93,7 @@ export default function Home({ notes, tags, setSelectedNoteId }: homeProps) {
 }
 
 type NoteCardsProps = {
-  note: note;
+  note: RawNote;
   handleClick: (arg: string) => void;
 };
 
@@ -111,7 +106,7 @@ function NoteCards({ note, handleClick }: NoteCardsProps) {
     >
       <div className="font-bold">{note.title}</div>
       <div>
-        {note.tags.map((tag) => (
+        {note.tagsId.map((tag) => (
           <span className="bg-blue-400 py-1 px-2 text-[13px] font-bold text-white rounded-full">
             {tag}
           </span>

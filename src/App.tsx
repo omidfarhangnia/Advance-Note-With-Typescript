@@ -4,36 +4,27 @@ import Home from "./Component/Home";
 import New from "./Component/New";
 import Show from "./Component/Show";
 import Edit from "./Component/Edit";
-import { note } from "./Component/projectTypes";
+import { RawNote, Tag } from "./Component/projectTypes";
+import { useLocalStorage } from "./useLocalStorage";
 
 function App() {
-  const [notes, setNotes] = useState<note[]>([
-    {
-      title: "gsgsgs",
-      tags: ["helloo"],
-      body: "gsgsgsgs",
-      id: "0b883178-7c81-4c32-aeec-0eb77e6be4c3",
-    },
-    {
-      title: "sssssssssssss",
-      tags: ["helloo"],
-      body: "sggggggggggggg",
-      id: "90201a43-8a90-4fd7-8f86-da6f26617641",
-    },
-    {
-      title: "hello there",
-      tags: ["helloo"],
-      body: "general kenobi\n",
-      id: "1407e31e-a870-4970-a615-9854f617c460",
-    },
-  ]);
-  const [tags, setTags] = useState<string[]>(["hello", "its", "me"]);
+  const [notes, setNotes] = useState<RawNote[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
   const [selectedNoteId, setSelectedNoteId] = useState<string>("");
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home setSelectedNoteId={setSelectedNoteId} notes={notes} tags={tags} />} />
+        <Route
+          path="/"
+          element={
+            <Home
+              setSelectedNoteId={setSelectedNoteId}
+              notes={notes}
+              tags={tags}
+            />
+          }
+        />
         <Route
           path="/new"
           element={
@@ -46,7 +37,7 @@ function App() {
           }
         />
         <Route path="/:id">
-          <Route index element={<Show selectedNote={notes.filter((note) => note.id = selectedNoteId)[0]} />} />
+          <Route index element={<Show />} />
           <Route path="edit" element={<Edit />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
