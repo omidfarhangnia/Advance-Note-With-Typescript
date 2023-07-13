@@ -12,6 +12,7 @@ function App() {
   const [tags, setTags] = useState<Tag[]>([]);
   const [selectedNoteId, setSelectedNoteId] = useState<string>("");
 
+  
   return (
     <>
       <Routes>
@@ -22,6 +23,7 @@ function App() {
               setSelectedNoteId={setSelectedNoteId}
               notes={notes}
               tags={tags}
+              setTags={setTags}
             />
           }
         />
@@ -37,7 +39,7 @@ function App() {
           }
         />
         <Route path="/:id">
-          <Route index element={<Show />} />
+          <Route index element={<Show notes={notes} />} />
           <Route path="edit" element={<Edit />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />

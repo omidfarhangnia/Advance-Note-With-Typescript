@@ -7,10 +7,11 @@ import CreatableSelect from "react-select/creatable";
 type homeProps = {
   notes: RawNote[];
   tags: Tag[];
+  setTags: (arg: Tag[]) => void;
   setSelectedNoteId: (arg: string) => void;
 };
 
-export default function Home({ notes, tags, setSelectedNoteId }: homeProps) {
+export default function Home({ notes, tags, setTags, setSelectedNoteId }: homeProps) {
   const [chosenTitle, setChosenTitle] = useState<string>("");
 
   function handleClick(id: string) {
@@ -62,6 +63,16 @@ export default function Home({ notes, tags, setSelectedNoteId }: homeProps) {
               <CreatableSelect
                 isMulti
                 className="[&>div]:bg-transparent border-2 border-solid border-blue-400 rounded-lg min-h-[60px] flex justify-center items-center [&>div]:w-full [&>div]:border-none [&>div>div>div[class*='multiValue']]:bg-white [&>div>div>div[class*='multiValue']]:text-[18px]"
+                value={tags.map((tag) => {
+                  return { label: tag.label, value: tag.id };
+                })}
+                onChange={(tags) => {
+                  setTags(
+                    tags.map((tag) => {
+                      return { label: tag.label, id: tag.value };
+                    })
+                  );
+                }}
               />
             </div>
           </form>
@@ -105,9 +116,9 @@ function NoteCards({ note, handleClick }: NoteCardsProps) {
       className="w-[30%] flex flex-col gap-2 py-3 rounded-2xl items-center border-2 border-solid border-blue-400"
     >
       <div className="font-bold">{note.title}</div>
-      <div>
+      <div className="flex gap-2">
         {note.tagsId.map((tag) => (
-          <span className="bg-blue-400 py-1 px-2 text-[13px] font-bold text-white rounded-full">
+          <span className="bg-blue-400 py-1 px-2 text-[13px] font-bold text-white rounded-lg">
             {tag}
           </span>
         ))}

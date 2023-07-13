@@ -14,15 +14,15 @@ type newProps = {
 export default function New({ notes, setNotes, setTags, tags }: newProps) {
   const titleRef = useRef<HTMLInputElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
-  const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+  const [selectedTag, setSelectedTag] = useState<Tag[]>([]);
   const navigate = useNavigate();
-
+  
   function handleClickSave() {
     setNotes([
       ...notes,
       {
         title: titleRef.current!.value,
-        tagsId: [],
+        tagsId: selectedTag.map(tag => tag.id),
         body: bodyRef.current!.value,
         id: uuidv4(),
       },
@@ -67,17 +67,18 @@ export default function New({ notes, setNotes, setTags, tags }: newProps) {
             tags
           </label>
           <CreatableSelect
-            value={selectedTags.map((tag) => {
+            value={selectedTag.map((tag) => {
               return { label: tag.label, value: tag.id };
             })}
             onChange={(tags) => {
-              setSelectedTags(
+              setSelectedTag(
                 tags.map((tag) => {
                   return { label: tag.label, id: tag.value };
                 })
               );
             }}
             isMulti
+            className="[&>div]:bg-transparent border-2 border-solid border-blue-400 rounded-lg min-h-[60px] flex justify-center items-center [&>div]:w-full [&>div]:border-none [&>div>div>div[class*='multiValue']]:bg-white [&>div>div>div[class*='multiValue']]:text-[18px]"
           />
         </div>
         <div className="w-full flex flex-col gap-3">
