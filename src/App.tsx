@@ -18,6 +18,23 @@ function App() {
     navigate("/");
   }
 
+  function handleSaveNote(note: RawNote) {
+    setNotes([...notes, note]);
+    navigate("/");
+  }
+
+  function handleUpdateNote(note: RawNote) {
+    setNotes(
+      notes.map((noteMember) => {
+        if (noteMember.id === note.id) {
+          return note;
+        } else {
+          return noteMember;
+        }
+      })
+    );
+  }
+
   return (
     <>
       <Routes>
@@ -36,8 +53,7 @@ function App() {
           path="/new"
           element={
             <New
-              notes={notes}
-              setNotes={setNotes}
+              handleSaveNote={handleSaveNote}
               setTags={setTags}
               tags={tags}
             />
@@ -48,7 +64,10 @@ function App() {
             index
             element={<Show handleDeleteNote={handleDeleteNote} notes={notes} />}
           />
-          <Route path="edit" element={<Edit />} />
+          <Route
+            path="edit"
+            element={<Edit handleUpdateNote={handleUpdateNote} />}
+          />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

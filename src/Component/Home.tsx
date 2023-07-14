@@ -117,8 +117,8 @@ function NoteCards({ note, handleClick }: NoteCardsProps) {
     >
       <div className="font-bold">{note.title}</div>
       <div className="flex gap-2">
-        {note.tagsId.map((tag) => (
-          <span className="bg-blue-400 py-1 px-2 text-[13px] font-bold text-white rounded-lg">
+        {note.tagsId.map((tag, index) => (
+          <span key={index} className="bg-blue-400 py-1 px-2 text-[13px] font-bold text-white rounded-lg">
             {tag}
           </span>
         ))}

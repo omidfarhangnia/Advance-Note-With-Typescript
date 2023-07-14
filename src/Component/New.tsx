@@ -5,29 +5,16 @@ import { v4 as uuidv4 } from "uuid";
 import CreatableSelect from "react-select/creatable";
 
 type newProps = {
-  notes: RawNote[];
-  setNotes: (arg: RawNote[]) => void;
+  handleSaveNote: (note: RawNote) => void;
   setTags: (arg: Tag[]) => void;
   tags: Tag[];
 };
 
-export default function New({ notes, setNotes, setTags, tags }: newProps) {
+export default function New({ handleSaveNote, setTags, tags }: newProps) {
   const titleRef = useRef<HTMLInputElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
   const [selectedTag, setSelectedTag] = useState<Tag[]>([]);
   const navigate = useNavigate();
-  
-  function handleClickSave() {
-    setNotes([
-      ...notes,
-      {
-        title: titleRef.current!.value,
-        tagsId: selectedTag.map(tag => tag.id),
-        body: bodyRef.current!.value,
-        id: uuidv4(),
-      },
-    ]);
-  }
 
   return (
     <div className="w-full h-screen flex flex-col gap-[7vh] bg-gray-400/30 px-[10vw] py-[5vh]">
@@ -35,7 +22,14 @@ export default function New({ notes, setNotes, setTags, tags }: newProps) {
         <h1 className="text-6xl font-belanosima capitalize">new note</h1>
         <div className="flex gap-3 text-[25px]">
           <button
-            onClick={handleClickSave}
+            onClick={() => {
+              handleSaveNote({
+                title: titleRef.current!.value,
+                tagsId: selectedTag.map((tag) => tag.id),
+                body: bodyRef.current!.value,
+                id: uuidv4(),
+              });
+            }}
             className="font-belanosima font-light capitalize rounded-lg bg-blue-600 text-white px-4 py-2"
           >
             save
