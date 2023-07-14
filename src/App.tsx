@@ -66,7 +66,7 @@ function App() {
           />
           <Route
             path="edit"
-            element={<Edit handleUpdateNote={handleUpdateNote} />}
+            element={<Edit handleUpdateNote={handleUpdateNote} notes={notes}/>}
           />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />

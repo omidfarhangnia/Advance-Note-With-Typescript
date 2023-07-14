@@ -8,8 +8,8 @@ type ShowParams = {
 };
 
 export default function Show({ handleDeleteNote, notes }: ShowParams) {
-  const { id } = useParams();
   const [selectedNote, setSelectedNote] = useState<RawNote>();
+  const { id } = useParams();
 
   useEffect(() => {
     setSelectedNote(notes.filter((note) => note.id === id)[0]);
@@ -33,7 +33,7 @@ export default function Show({ handleDeleteNote, notes }: ShowParams) {
             </div>
           </div>
           <div className="flex gap-4">
-            <Link to="/edit">
+            <Link to="edit" state={{ noteId: id }}>
               <button className="font-belanosima font-light capitalize rounded-lg bg-blue-600 text-white px-4 py-2">
                 edit
               </button>
