@@ -27,8 +27,6 @@ export default function New({ notes, setNotes, setTags, tags }: newProps) {
         id: uuidv4(),
       },
     ]);
-
-    navigate("/");
   }
 
   return (

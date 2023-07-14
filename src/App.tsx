@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Home from "./Component/Home";
 import New from "./Component/New";
 import Show from "./Component/Show";
@@ -11,8 +11,13 @@ function App() {
   const [notes, setNotes] = useState<RawNote[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [selectedNoteId, setSelectedNoteId] = useState<string>("");
+  const navigate = useNavigate();
 
-  
+  function handleDeleteNote(note: RawNote) {
+    setNotes(notes.filter((member) => member.id !== note.id));
+    navigate("/");
+  }
+
   return (
     <>
       <Routes>
@@ -39,7 +44,10 @@ function App() {
           }
         />
         <Route path="/:id">
-          <Route index element={<Show notes={notes} />} />
+          <Route
+            index
+            element={<Show handleDeleteNote={handleDeleteNote} notes={notes} />}
+          />
           <Route path="edit" element={<Edit />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
