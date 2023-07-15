@@ -8,9 +8,15 @@ type newProps = {
   handleSaveNote: (note: Note) => void;
   setTags: (arg: Tag[]) => void;
   tags: Tag[];
+  availableTags: string[];
 };
 
-export default function New({ handleSaveNote, setTags, tags }: newProps) {
+export default function New({
+  handleSaveNote,
+  availableTags,
+  setTags,
+  tags,
+}: newProps) {
   const titleRef = useRef<HTMLInputElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
   const [selectedTag, setSelectedTag] = useState<Tag[]>([]);
@@ -61,6 +67,9 @@ export default function New({ handleSaveNote, setTags, tags }: newProps) {
           <CreatableSelect
             value={selectedTag.map((tag) => {
               return { label: tag.label, value: tag.id };
+            })}
+            options={availableTags.map((tag) => {
+              return { label: tag, value: tag };
             })}
             onChange={(tags) => {
               setSelectedTag(

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Home from "./Component/Home";
 import New from "./Component/New";
@@ -10,8 +10,23 @@ import { useLocalStorage } from "./useLocalStorage";
 function App() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
+  const [availableTags, setAvailableTags] = useState<string[]>([]);
   const [selectedNoteId, setSelectedNoteId] = useState<string>("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const tags: string[] = [];
+
+    notes.map((note) => {
+      note.tags.map((tag) => {
+        if (!tags.includes(tag.id)) {
+          tags.push(tag.id);
+        }
+      });
+    });
+
+    setAvailableTags(tags);
+  }, [notes]);
 
   function handleDeleteNote(note: Note) {
     setNotes(notes.filter((member) => member.id !== note.id));
@@ -43,6 +58,7 @@ function App() {
           element={
             <Home
               setSelectedNoteId={setSelectedNoteId}
+              availableTags={availableTags}
               notes={notes}
               tags={tags}
               setTags={setTags}
@@ -53,6 +69,7 @@ function App() {
           path="/new"
           element={
             <New
+              availableTags={availableTags}
               handleSaveNote={handleSaveNote}
               setTags={setTags}
               tags={tags}
@@ -66,7 +83,13 @@ function App() {
           />
           <Route
             path="edit"
-            element={<Edit handleUpdateNote={handleUpdateNote} notes={notes} />}
+            element={
+              <Edit
+                handleUpdateNote={handleUpdateNote}
+                notes={notes}
+                availableTags={availableTags}
+              />
+            }
           />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />

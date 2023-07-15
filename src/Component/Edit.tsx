@@ -6,9 +6,14 @@ import CreatableSelect from "react-select/creatable";
 type EditParams = {
   handleUpdateNote: (note: Note) => void;
   notes: Note[];
+  availableTags: string[];
 };
 
-export default function Edit({ handleUpdateNote, notes }: EditParams) {
+export default function Edit({
+  handleUpdateNote,
+  availableTags,
+  notes,
+}: EditParams) {
   const [selectedNote, setSelectedNote] = useState<Note>();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -77,6 +82,9 @@ export default function Edit({ handleUpdateNote, notes }: EditParams) {
               isMulti
               value={selectedTags.map((tag) => {
                 return { label: tag.label, value: tag.id };
+              })}
+              options={availableTags.map((tag) => {
+                return { label: tag, value: tag };
               })}
               onChange={(tags) => {
                 setSelectedTags(

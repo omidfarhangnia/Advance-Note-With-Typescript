@@ -9,6 +9,7 @@ type homeProps = {
   tags: Tag[];
   setTags: (arg: Tag[]) => void;
   setSelectedNoteId: (arg: string) => void;
+  availableTags: string[];
 };
 
 export default function Home({
@@ -16,6 +17,7 @@ export default function Home({
   tags,
   setTags,
   setSelectedNoteId,
+  availableTags,
 }: homeProps) {
   const [chosenTitle, setChosenTitle] = useState<string>("");
 
@@ -70,6 +72,9 @@ export default function Home({
                 className="[&>div]:bg-transparent border-2 border-solid border-blue-400 rounded-lg min-h-[60px] flex justify-center items-center [&>div]:w-full [&>div]:border-none [&>div>div>div[class*='multiValue']]:bg-white [&>div>div>div[class*='multiValue']]:text-[18px]"
                 value={tags.map((tag) => {
                   return { label: tag.label, value: tag.id };
+                })}
+                options={availableTags.map((tag) => {
+                  return { label: tag, value: tag };
                 })}
                 onChange={(tags) => {
                   setTags(
