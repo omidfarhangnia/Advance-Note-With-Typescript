@@ -5,12 +5,12 @@ import New from "./Component/New";
 import Show from "./Component/Show";
 import Edit from "./Component/Edit";
 import { Note, Tag } from "./Component/projectTypes";
-import { useLocalStorage } from "./useLocalStorage";
+import useLocalStorage from "./useLocalStorage";
 import EditTags from "./Component/EditTags";
 
 function App() {
-  const [notes, setNotes] = useState<Note[]>([]);
-  const [tags, setTags] = useState<Tag[]>([]);
+  const [notes, setNotes] = useLocalStorage<Note[]>("NOTES", []);
+  const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", []);
   const [availableTags, setAvailableTags] = useState<string[]>([]);
   const [selectedNoteId, setSelectedNoteId] = useState<string>("");
   const navigate = useNavigate();
