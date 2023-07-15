@@ -6,6 +6,7 @@ import Show from "./Component/Show";
 import Edit from "./Component/Edit";
 import { Note, Tag } from "./Component/projectTypes";
 import { useLocalStorage } from "./useLocalStorage";
+import EditTags from "./Component/EditTags";
 
 function App() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -50,6 +51,21 @@ function App() {
     );
   }
 
+  function handleDeleteTag(paramTag: string) {
+    setAvailableTags(availableTags.filter((tag) => tag !== paramTag));
+
+    setNotes(
+      notes.map((note) => {
+        const newTags = note.tags.filter((tag) => tag.label !== paramTag);
+
+        return {
+          ...note,
+          tags: newTags,
+        };
+      })
+    );
+  }
+
   return (
     <>
       <Routes>
@@ -73,6 +89,15 @@ function App() {
               handleSaveNote={handleSaveNote}
               setTags={setTags}
               tags={tags}
+            />
+          }
+        />
+        <Route
+          path="/edittags"
+          element={
+            <EditTags
+              handleDeleteTag={handleDeleteTag}
+              availableTags={availableTags}
             />
           }
         />

@@ -36,9 +36,11 @@ export default function Home({
                 create
               </button>
             </Link>
-            <button className="font-belanosima font-light capitalize rounded-lg bg-white text-blue-600 px-4 py-2">
-              edit tags
-            </button>
+            <Link to={"/edittags"}>
+              <button className="font-belanosima font-light capitalize rounded-lg bg-white text-blue-600 px-4 py-2">
+                edit tags
+              </button>
+            </Link>
           </div>
         </div>
         <div>
