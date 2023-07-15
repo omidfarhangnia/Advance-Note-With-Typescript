@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { RawNote } from "./projectTypes";
+import { Note } from "./projectTypes";
 
 type ShowParams = {
-  notes: RawNote[];
-  handleDeleteNote: (note: RawNote) => void;
+  notes: Note[];
+  handleDeleteNote: (note: Note) => void;
 };
 
 export default function Show({ handleDeleteNote, notes }: ShowParams) {
-  const [selectedNote, setSelectedNote] = useState<RawNote>();
+  const [selectedNote, setSelectedNote] = useState<Note>();
   const { id } = useParams();
 
   useEffect(() => {
@@ -22,12 +22,12 @@ export default function Show({ handleDeleteNote, notes }: ShowParams) {
           <div className="flex flex-col gap-3">
             <div className="text-[30px] font-bold">{selectedNote?.title}</div>
             <div className="flex gap-2">
-              {selectedNote?.tagsId.map((id, index) => (
+              {selectedNote?.tags.map((tag, index) => (
                 <span
                   key={index}
                   className="bg-blue-400 py-1 px-2 text-[13px] font-bold text-white rounded-lg"
                 >
-                  {id}
+                  {tag.label}
                 </span>
               ))}
             </div>

@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
-import { RawNote, Tag } from "./projectTypes";
+import { Note, Tag } from "./projectTypes";
 import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import CreatableSelect from "react-select/creatable";
 
 type newProps = {
-  handleSaveNote: (note: RawNote) => void;
+  handleSaveNote: (note: Note) => void;
   setTags: (arg: Tag[]) => void;
   tags: Tag[];
 };
@@ -25,7 +25,7 @@ export default function New({ handleSaveNote, setTags, tags }: newProps) {
             onClick={() => {
               handleSaveNote({
                 title: titleRef.current!.value,
-                tagsId: selectedTag.map((tag) => tag.id),
+                tags: selectedTag,
                 body: bodyRef.current!.value,
                 id: uuidv4(),
               });

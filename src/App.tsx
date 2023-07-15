@@ -4,26 +4,26 @@ import Home from "./Component/Home";
 import New from "./Component/New";
 import Show from "./Component/Show";
 import Edit from "./Component/Edit";
-import { RawNote, Tag } from "./Component/projectTypes";
+import { Note, Tag } from "./Component/projectTypes";
 import { useLocalStorage } from "./useLocalStorage";
 
 function App() {
-  const [notes, setNotes] = useState<RawNote[]>([]);
+  const [notes, setNotes] = useState<Note[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [selectedNoteId, setSelectedNoteId] = useState<string>("");
   const navigate = useNavigate();
 
-  function handleDeleteNote(note: RawNote) {
+  function handleDeleteNote(note: Note) {
     setNotes(notes.filter((member) => member.id !== note.id));
     navigate("/");
   }
 
-  function handleSaveNote(note: RawNote) {
+  function handleSaveNote(note: Note) {
     setNotes([...notes, note]);
     navigate("/");
   }
 
-  function handleUpdateNote(note: RawNote) {
+  function handleUpdateNote(note: Note) {
     setNotes(
       notes.map((noteMember) => {
         if (noteMember.id === note.id) {
@@ -66,7 +66,7 @@ function App() {
           />
           <Route
             path="edit"
-            element={<Edit handleUpdateNote={handleUpdateNote} notes={notes}/>}
+            element={<Edit handleUpdateNote={handleUpdateNote} notes={notes} />}
           />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />

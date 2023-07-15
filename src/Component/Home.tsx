@@ -1,17 +1,22 @@
 import { PiGhostFill } from "react-icons/pi";
-import { RawNote, Tag } from "./projectTypes";
+import { Note, Tag } from "./projectTypes";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import CreatableSelect from "react-select/creatable";
 
 type homeProps = {
-  notes: RawNote[];
+  notes: Note[];
   tags: Tag[];
   setTags: (arg: Tag[]) => void;
   setSelectedNoteId: (arg: string) => void;
 };
 
-export default function Home({ notes, tags, setTags, setSelectedNoteId }: homeProps) {
+export default function Home({
+  notes,
+  tags,
+  setTags,
+  setSelectedNoteId,
+}: homeProps) {
   const [chosenTitle, setChosenTitle] = useState<string>("");
 
   function handleClick(id: string) {
@@ -104,7 +109,7 @@ export default function Home({ notes, tags, setTags, setSelectedNoteId }: homePr
 }
 
 type NoteCardsProps = {
-  note: RawNote;
+  note: Note;
   handleClick: (arg: string) => void;
 };
 
@@ -117,9 +122,12 @@ function NoteCards({ note, handleClick }: NoteCardsProps) {
     >
       <div className="font-bold">{note.title}</div>
       <div className="flex gap-2">
-        {note.tagsId.map((tag, index) => (
-          <span key={index} className="bg-blue-400 py-1 px-2 text-[13px] font-bold text-white rounded-lg">
-            {tag}
+        {note.tags.map((tag, index) => (
+          <span
+            key={index}
+            className="bg-blue-400 py-1 px-2 text-[13px] font-bold text-white rounded-lg"
+          >
+            {tag.label}
           </span>
         ))}
       </div>
